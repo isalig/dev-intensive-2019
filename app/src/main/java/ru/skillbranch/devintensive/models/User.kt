@@ -35,35 +35,35 @@ class User(
         private var lastVisit: Date = Date()
         private var isOnline: Boolean = false
 
-        fun id(id: String) {
-            this.id = id;
+        fun id(id: String): Builder = this.apply {
+            this.id = id
         }
 
-        fun firstName(firstName: String?) {
+        fun firstName(firstName: String?): Builder = apply {
             this.firstName = firstName
         }
 
-        fun lastName(lastName: String?) {
+        fun lastName(lastName: String?): Builder = apply {
             this.lastName = lastName
         }
 
-        fun avatar(avatar: String?) {
+        fun avatar(avatar: String?): Builder = apply {
             this.avatar = avatar
         }
 
-        fun rating(rating: Int) {
+        fun rating(rating: Int): Builder = apply {
             this.rating = rating
         }
 
-        fun respect(respect: Int) {
+        fun respect(respect: Int): Builder = apply {
             this.respect = respect
         }
 
-        fun lastVisit(lastVisit: Date) {
+        fun lastVisit(lastVisit: Date): Builder = apply {
             this.lastVisit = lastVisit
         }
 
-        fun isOnline(isOnline: Boolean) {
+        fun isOnline(isOnline: Boolean): Builder = apply {
             this.isOnline = isOnline
         }
 
