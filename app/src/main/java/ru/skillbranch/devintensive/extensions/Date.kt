@@ -1,6 +1,5 @@
 package ru.skillbranch.devintensive.extensions
 
-import ru.skillbranch.devintensive.models.TimeUnits
 import ru.skillbranch.devintensive.utils.Utils
 import java.text.SimpleDateFormat
 import java.util.*
@@ -9,6 +8,18 @@ fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy") = SimpleDateFormat(patter
     .format(this)
 
 fun Date.add(value: Int, timeUnits: TimeUnits) = timeUnits.modifyDate(this, value)
+
+enum class TimeUnits(private val factor: Int) {
+
+    SECOND(1),
+    MINUTE(SECOND.factor * 60),
+    HOUR(MINUTE.factor * 60),
+    DAY(HOUR.factor * 24);
+
+    fun modifyDate(date: Date, value: Int) : Date {
+        return  Date((date.time / 1000 + value * factor) * 1000)
+    }
+}
 
 fun Date.humanizeDiff(): String {
     val currentSeconds = Date().time / 1000
