@@ -4,20 +4,25 @@ import ru.skillbranch.devintensive.utils.Utils
 import java.text.SimpleDateFormat
 import java.util.*
 
+const val PER_SECOND = 1000L
+const val PER_MINUTE = 60 * PER_SECOND
+const val PER_HOUR = 60 * PER_MINUTE
+const val PER_DAY = 24 * PER_HOUR
+
 fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy") = SimpleDateFormat(pattern, Locale("ru"))
     .format(this)
 
-fun Date.add(value: Int, timeUnits: TimeUnits) = timeUnits.modifyDate(this, value)
+fun Date.add(value: Int, timeUnits: TimeUnits = TimeUnits.SECOND) = timeUnits.modifyDate(this, value)
 
-enum class TimeUnits(private val factor: Int) {
+enum class TimeUnits(private val factor: Long) {
 
-    SECOND(1),
-    MINUTE(SECOND.factor * 60),
-    HOUR(MINUTE.factor * 60),
-    DAY(HOUR.factor * 24);
+    SECOND(PER_SECOND),
+    MINUTE(PER_MINUTE),
+    HOUR(PER_HOUR),
+    DAY(PER_DAY);
 
-    fun modifyDate(date: Date, value: Int) : Date {
-        return  Date((date.time / 1000 + value * factor) * 1000)
+    fun modifyDate(date: Date, value: Int): Date {
+        return Date(date.time + value * factor)
     }
 }
 
@@ -28,11 +33,11 @@ fun Date.humanizeDiff(): String {
     val diff = Math.abs(currentSeconds - dateSeconds)
     val diffPart = findHumanizedDiff(diff)
 
-    if(diff < 1){
+    if (diff < 1) {
         return "только что"
     }
 
-    if(diff > 360 * 24 * 60 * 60){
+    if (diff > 360 * 24 * 60 * 60) {
         return if (currentSeconds > dateSeconds) {
             "более года назад"
         } else {

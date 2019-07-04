@@ -1,5 +1,6 @@
 package ru.skillbranch.devintensive.models
 
+import ru.skillbranch.devintensive.extensions.humanizeDiff
 import java.util.*
 
 class TextMessage(
@@ -18,5 +19,5 @@ class TextMessage(
 ) {
 
     override fun formatMessage(): String =
-        "${from?.firstName} ${if(isIncoming) "получил" else "отправил"} сообщение \"$text\" только что"
+        "${from?.firstName} ${if(isIncoming) "получил" else "отправил"} сообщение \"$text\" ${date.humanizeDiff()}"
 }

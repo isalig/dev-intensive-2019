@@ -17,14 +17,14 @@ abstract class BaseMessage(
         fun makeMessage(
             from: User?,
             chat: Chat,
-            date: Date,
-            type: String,
+            date: Date = Date(),
+            type: String = "text",
             payload: String,
             isIncoming: Boolean = false
         ): BaseMessage {
             return when (type) {
-                MessageType.IMAGE.toString() -> makeTextMessage(from, chat, date, payload, isIncoming)
-                MessageType.TEXT.toString() -> makeImageMessage(from, chat, date, payload, isIncoming)
+                MessageType.TEXT.toString() -> makeTextMessage(from, chat, date, payload, isIncoming)
+                MessageType.IMAGE.toString() -> makeImageMessage(from, chat, date, payload, isIncoming)
                 else -> throw IllegalArgumentException("Unknown message type")
             }
         }
