@@ -16,14 +16,24 @@ fun Date.add(value: Int, timeUnits: TimeUnits = TimeUnits.SECOND) = timeUnits.mo
 
 enum class TimeUnits(private val factor: Long) {
 
-    SECOND(PER_SECOND),
-    MINUTE(PER_MINUTE),
-    HOUR(PER_HOUR),
-    DAY(PER_DAY);
+    SECOND(PER_SECOND) {
+        override fun plural(value: Int) = "$value ${pluralSeconds(value)}"
+    },
+    MINUTE(PER_MINUTE) {
+        override fun plural(value: Int) = "$value ${pluralMinutes(value)}"
+    },
+    HOUR(PER_HOUR) {
+        override fun plural(value: Int) = "$value ${pluralHours(value)}"
+    },
+    DAY(PER_DAY) {
+        override fun plural(value: Int) = "$value ${pluralDays(value)}"
+    };
 
     fun modifyDate(date: Date, value: Int): Date {
         return Date(date.time + value * factor)
     }
+
+    abstract fun plural(value: Int): String
 }
 
 fun Date.humanizeDiff(): String {
@@ -72,6 +82,8 @@ private fun findHumanizedDiff(diff: Long): String = when {
     }
     else -> ""
 }
+
+private fun pluralSeconds(seconds: Int) = Utils.pluralTimeUnit(seconds, "секунду", "секунды", "секунд")
 
 private fun pluralMinutes(minutes: Int) = Utils.pluralTimeUnit(minutes, "минуту", "минуты", "минут")
 

@@ -44,7 +44,7 @@ object Utils {
                 return char.toString()
             }
 
-            val result = dictionary[char.toLowerCase()].toString() ?: ""
+            val result = dictionary[char.toLowerCase()]?.toString() ?: ""
 
             if (char.isUpperCase()) {
                 return result.capitalize()
@@ -55,7 +55,7 @@ object Utils {
 
         fun transliterate(word: String): String {
             if (word.isBlank()) {
-                return "";
+                return ""
             }
 
             return word.map { transliterateChar(it) }.joinToString("")
@@ -64,7 +64,7 @@ object Utils {
 
         val builder = StringBuilder()
         val payloadWords = payload.trim().split(" ")
-        payloadWords.forEachIndexed() { index, word ->
+        payloadWords.forEachIndexed { index, word ->
             builder.append(transliterate(word))
             if (index + 1 < payloadWords.size) {
                 builder.append(divider)
@@ -87,14 +87,9 @@ object Utils {
             return many
         }
 
-        var digits = count
-        while (digits > 10) {
-            digits %= 10
-        }
-
-        return when{
-            digits == 0 || digits in 5 .. 9 -> many
-            digits == 1 -> one
+        return when (count % 10) {
+            0, in 5..9 -> many
+            1 -> one
             else -> few
         }
     }
