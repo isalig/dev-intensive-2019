@@ -7,3 +7,5 @@ fun String.truncate(length: Int = 16) = with(trim()) {
         substring(0, length).trim() + "..."
     }
 }
+
+fun String.stripHtml() = this.replace(Regex("<[^<]*?>|&\\d+;"), "").replace(Regex("\\s+"), " ")
