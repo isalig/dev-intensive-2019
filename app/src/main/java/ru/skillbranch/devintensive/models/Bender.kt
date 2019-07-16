@@ -7,8 +7,8 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
     fun askQuestion(): String = question.question
 
     fun listenAnswer(answer: String): Pair<String, Triple<Int, Int, Int>> = when {
-        !question.isAnswerValid(answer) -> "${getValidationError()}\nquestion.question}" to status.color
-        question.answers.contains(answer) -> {
+        !question.isAnswerValid(answer) -> "${getValidationError()}\n${question.question}" to status.color
+        question.answers.contains(answer.toLowerCase()) -> {
             question = question.nextQuestion()
             "Отлично - это правильный ответ\n${question.question}" to status.color
         }

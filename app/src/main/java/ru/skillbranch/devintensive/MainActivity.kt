@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun onMessageSend() {
-        val (phrase, color) = benderObj.listenAnswer(messageEt.text.toString().toLowerCase())
+        val (phrase, color) = benderObj.listenAnswer(messageEt.text.toString())
         messageEt.setText("")
         updateState(phrase, color)
     }
