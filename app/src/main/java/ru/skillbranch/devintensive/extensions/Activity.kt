@@ -11,7 +11,6 @@ import android.view.inputmethod.InputMethodManager
 fun Activity.hideKeyboard() {
     val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as? InputMethodManager
     val view = currentFocus ?: View(this)
-    view.clearFocus()
     imm?.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
@@ -26,12 +25,10 @@ fun Activity.isKeyboardOpen(): Boolean {
 val Activity.rootView: View
     get() = findViewById<View>(android.R.id.content)
 
-fun Context.convertDpToPx(dp: Float): Float {
-    return TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_DIP,
-        dp,
-        this.resources.displayMetrics
-    )
-}
+fun Context.convertDpToPx(dp: Float) = TypedValue.applyDimension(
+    TypedValue.COMPLEX_UNIT_DIP,
+    dp,
+    this.resources.displayMetrics
+)
 
 fun Activity.isKeyboardClosed() = !isKeyboardOpen()
